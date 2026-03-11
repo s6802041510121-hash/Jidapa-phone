@@ -5,383 +5,383 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
 
-const [stdPhones, setStdPhones] = useState([]);
-const [name, setName] = useState("");
-const [sect, setSect] = useState("");
-const [tel, setTel] = useState("");
-const [search,setSearch]=useState("");
+    const [stdPhones, setStdPhones] = useState([]);
+    const [name, setName] = useState("");
+    const [sect, setSect] = useState("");
+    const [tel, setTel] = useState("");
+    const [search, setSearch] = useState("");
 
-const stdPhoneRef = collection(db, "/stdphones");
+    const stdPhoneRef = collection(db, "/stdphones");
 
-useEffect(()=>{
-loadPhones();
-},[]);
+    useEffect(() => {
+        loadPhones();
+    }, [targetDoc]);
 
-const loadPhones = () => {
+    const loadPhones = () => {
 
-getDocs(stdPhoneRef)
-.then((phones)=>{
+        getDocs(stdPhoneRef)
+            .then((phones) => {
 
-let list=[];
+                let list = [];
 
-phones.docs.forEach(doc=>{
-list.push({id:doc.id,...doc.data()});
-});
+                phones.docs.forEach(doc => {
+                    list.push({ id: doc.id, ...doc.data() });
+                });
 
-setStdPhones(list);
+                setStdPhones(list);
 
-})
-.catch(err=>alert(err));
+            })
+            .catch(err => alert(err));
 
-};
+    };
 
-const addPhone = () => {
+    const addPhone = () => {
 
-if(name==="" || sect==="" || tel===""){
-alert("Please fill all fields");
-return;
-}
+        if (name === "" || sect === "" || tel === "") {
+            alert("Please fill all fields");
+            return;
+        }
 
-const phone={name,sect,tel};
+        const phone = { name, sect, tel };
 
-addDoc(stdPhoneRef,phone)
-.then(()=>{
+        addDoc(stdPhoneRef, phone)
+            .then(() => {
 
-setName("");
-setSect("");
-setTel("");
+                setName("");
+                setSect("");
+                setTel("");
 
-loadPhones();
+                loadPhones();
 
-})
-.catch(err=>alert(err));
+            })
+            .catch(err => alert(err));
 
-};
+    };
 
-const delPhone=(id)=>{
+    const delPhone = (id) => {
 
-if(!window.confirm("Delete this student?")) return;
+        if (!window.confirm("Delete this student?")) return;
 
-const targetDoc=doc(stdPhoneRef,id);
+        const targetDoc = doc(stdPhoneRef, id);
 
-deleteDoc(targetDoc)
-.then(()=>{
+        deleteDoc(targetDoc)
+            .then(() => {
 
-loadPhones();
+                loadPhones();
 
-})
-.catch(err=>alert(err));
+            })
+            .catch(err => alert(err));
 
-};
+    };
 
 
-const filteredStudents = stdPhones.filter(std =>
-std.name.toLowerCase().includes(search.toLowerCase())
-);
+    const filteredStudents = stdPhones.filter(std =>
+        std.name.toLowerCase().includes(search.toLowerCase())
+    );
 
 
-const totalCED = stdPhones.filter(s=>s.sect==="ced").length;
-const totalTCT = stdPhones.filter(s=>s.sect==="tct").length;
+    const totalCED = stdPhones.filter(s => s.sect === "ced").length;
+    const totalTCT = stdPhones.filter(s => s.sect === "tct").length;
 
 
-return(
+    return (
 
-<div
-style={{
-minHeight:"100vh",
-padding:"40px",
-background:"linear-gradient(135deg,#667eea,#764ba2)"
-}}
->
+        <div
+            style={{
+                minHeight: "100vh",
+                padding: "40px",
+                background: "linear-gradient(135deg,#667eea,#764ba2)"
+            }}
+        >
 
-<div className="container">
+            <div className="container">
 
-{/* HEADER */}
+                {/* HEADER */}
 
-<div
-style={{
-background:"white",
-padding:"35px",
-borderRadius:"18px",
-marginBottom:"30px",
-boxShadow:"0 10px 35px rgba(0,0,0,0.2)",
-textAlign:"center"
-}}
->
+                <div
+                    style={{
+                        background: "white",
+                        padding: "35px",
+                        borderRadius: "18px",
+                        marginBottom: "30px",
+                        boxShadow: "0 10px 35px rgba(0,0,0,0.2)",
+                        textAlign: "center"
+                    }}
+                >
 
-<h1 style={{fontWeight:"800"}}>
-📱 Student Phone Directory
-</h1>
+                    <h1 style={{ fontWeight: "800" }}>
+                        📱 Student Phone Directory
+                    </h1>
 
-<p style={{color:"#666"}}>
-Manage student contact information
-</p>
+                    <p style={{ color: "#666" }}>
+                        Manage student contact information
+                    </p>
 
-</div>
+                </div>
 
 
-{/* DASHBOARD */}
+                {/* DASHBOARD */}
 
-<div className="row mb-4">
+                <div className="row mb-4">
 
-<div className="col-md-4">
-<div className="card shadow border-0 text-center p-3">
-<h5>Total Students</h5>
-<h2>{stdPhones.length}</h2>
-</div>
-</div>
+                    <div className="col-md-4">
+                        <div className="card shadow border-0 text-center p-3">
+                            <h5>Total Students</h5>
+                            <h2>{stdPhones.length}</h2>
+                        </div>
+                    </div>
 
-<div className="col-md-4">
-<div className="card shadow border-0 text-center p-3">
-<h5>CED</h5>
-<h2 style={{color:"#28a745"}}>{totalCED}</h2>
-</div>
-</div>
+                    <div className="col-md-4">
+                        <div className="card shadow border-0 text-center p-3">
+                            <h5>CED</h5>
+                            <h2 style={{ color: "#28a745" }}>{totalCED}</h2>
+                        </div>
+                    </div>
 
-<div className="col-md-4">
-<div className="card shadow border-0 text-center p-3">
-<h5>TCT</h5>
-<h2 style={{color:"#ff9800"}}>{totalTCT}</h2>
-</div>
-</div>
+                    <div className="col-md-4">
+                        <div className="card shadow border-0 text-center p-3">
+                            <h5>TCT</h5>
+                            <h2 style={{ color: "#ff9800" }}>{totalTCT}</h2>
+                        </div>
+                    </div>
 
-</div>
+                </div>
 
 
-{/* ADD STUDENT */}
+                {/* ADD STUDENT */}
 
-<div
-style={{
-background:"white",
-padding:"30px",
-borderRadius:"18px",
-marginBottom:"30px",
-boxShadow:"0 10px 35px rgba(0,0,0,0.2)"
-}}
->
+                <div
+                    style={{
+                        background: "white",
+                        padding: "30px",
+                        borderRadius: "18px",
+                        marginBottom: "30px",
+                        boxShadow: "0 10px 35px rgba(0,0,0,0.2)"
+                    }}
+                >
 
-<h3 className="mb-3">➕ Add Student</h3>
+                    <h3 className="mb-3">➕ Add Student</h3>
 
-<div className="row g-3">
+                    <div className="row g-3">
 
-<div className="col-md-4">
+                        <div className="col-md-4">
 
-<label className="form-label">👤 Student Name</label>
+                            <label className="form-label">👤 Student Name</label>
 
-<input
-type="text"
-value={name}
-onChange={e=>setName(e.target.value)}
-className="form-control"
-placeholder="Enter student name"
-/>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={e => setName(e.target.value)}
+                                className="form-control"
+                                placeholder="Enter student name"
+                            />
 
-</div>
+                        </div>
 
-<div className="col-md-3">
+                        <div className="col-md-3">
 
-<label className="form-label">🏫 Section</label>
+                            <label className="form-label">🏫 Section</label>
 
-<div>
+                            <div>
 
-<input
-type="radio"
-name="rdSect"
-value="ced"
-checked={sect==="ced"}
-onChange={e=>setSect(e.target.value)}
-/>
+                                <input
+                                    type="radio"
+                                    name="rdSect"
+                                    value="ced"
+                                    checked={sect === "ced"}
+                                    onChange={e => setSect(e.target.value)}
+                                />
 
-&nbsp; CED
+                                &nbsp; CED
 
-&nbsp;&nbsp;
+                                &nbsp;&nbsp;
 
-<input
-type="radio"
-name="rdSect"
-value="tct"
-checked={sect==="tct"}
-onChange={e=>setSect(e.target.value)}
-/>
+                                <input
+                                    type="radio"
+                                    name="rdSect"
+                                    value="tct"
+                                    checked={sect === "tct"}
+                                    onChange={e => setSect(e.target.value)}
+                                />
 
-&nbsp; TCT
+                                &nbsp; TCT
 
-</div>
+                            </div>
 
-</div>
+                        </div>
 
-<div className="col-md-3">
+                        <div className="col-md-3">
 
-<label className="form-label">📞 Telephone</label>
+                            <label className="form-label">📞 Telephone</label>
 
-<input
-type="tel"
-value={tel}
-onChange={e=>setTel(e.target.value)}
-className="form-control"
-placeholder="Phone number"
-/>
+                            <input
+                                type="tel"
+                                value={tel}
+                                onChange={e => setTel(e.target.value)}
+                                className="form-control"
+                                placeholder="Phone number"
+                            />
 
-</div>
+                        </div>
 
-<div className="col-md-2">
+                        <div className="col-md-2">
 
-<button
-onClick={addPhone}
-className="btn btn-success w-100"
-style={{marginTop:"32px"}}
->
-Add
-</button>
+                            <button
+                                onClick={addPhone}
+                                className="btn btn-success w-100"
+                                style={{ marginTop: "32px" }}
+                            >
+                                Add
+                            </button>
 
-</div>
+                        </div>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
 
-{/* SEARCH */}
+                {/* SEARCH */}
 
-<div className="mb-3">
+                <div className="mb-3">
 
-<input
-type="text"
-placeholder="🔍 Search student name..."
-className="form-control"
-value={search}
-onChange={e=>setSearch(e.target.value)}
-/>
+                    <input
+                        type="text"
+                        placeholder="🔍 Search student name..."
+                        className="form-control"
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                    />
 
-</div>
+                </div>
 
 
-{/* STUDENT LIST */}
+                {/* STUDENT LIST */}
 
-<div
-style={{
-background:"white",
-padding:"30px",
-borderRadius:"18px",
-boxShadow:"0 10px 35px rgba(0,0,0,0.2)"
-}}
->
+                <div
+                    style={{
+                        background: "white",
+                        padding: "30px",
+                        borderRadius: "18px",
+                        boxShadow: "0 10px 35px rgba(0,0,0,0.2)"
+                    }}
+                >
 
-<h3 className="mb-3">📋 Student List</h3>
+                    <h3 className="mb-3">📋 Student List</h3>
 
-{filteredStudents.length>0?(
+                    {filteredStudents.length > 0 ? (
 
-<table className="table table-hover">
+                        <table className="table table-hover">
 
-<thead className="table-primary">
+                            <thead className="table-primary">
 
-<tr>
-<th></th>
-<th>Name</th>
-<th>Section</th>
-<th>Telephone</th>
-<th>Actions</th>
-</tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Section</th>
+                                    <th>Telephone</th>
+                                    <th>Actions</th>
+                                </tr>
 
-</thead>
+                            </thead>
 
-<tbody>
+                            <tbody>
 
-{filteredStudents.map(phone=>{
+                                {filteredStudents.map(phone => {
 
-return(
+                                    return (
 
-<tr key={phone.id} style={{transition:"0.2s"}}>
+                                        <tr key={phone.id} style={{ transition: "0.2s" }}>
 
-<td>
+                                            <td>
 
-<div
-style={{
-width:"35px",
-height:"35px",
-borderRadius:"50%",
-background:"#667eea",
-color:"white",
-display:"flex",
-alignItems:"center",
-justifyContent:"center",
-fontWeight:"bold"
-}}
->
-{phone.name.charAt(0).toUpperCase()}
-</div>
+                                                <div
+                                                    style={{
+                                                        width: "35px",
+                                                        height: "35px",
+                                                        borderRadius: "50%",
+                                                        background: "#667eea",
+                                                        color: "white",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        fontWeight: "bold"
+                                                    }}
+                                                >
+                                                    {phone.name.charAt(0).toUpperCase()}
+                                                </div>
 
-</td>
+                                            </td>
 
-<td style={{fontWeight:"600"}}>
-{phone.name}
-</td>
+                                            <td style={{ fontWeight: "600" }}>
+                                                {phone.name}
+                                            </td>
 
-<td>
+                                            <td>
 
-<span
-style={{
-background:phone.sect==="ced" ? "#28a745" : "#ff9800",
-color:"white",
-padding:"5px 12px",
-borderRadius:"12px",
-fontSize:"12px"
-}}
->
-{phone.sect.toUpperCase()}
-</span>
+                                                <span
+                                                    style={{
+                                                        background: phone.sect === "ced" ? "#28a745" : "#ff9800",
+                                                        color: "white",
+                                                        padding: "5px 12px",
+                                                        borderRadius: "12px",
+                                                        fontSize: "12px"
+                                                    }}
+                                                >
+                                                    {phone.sect.toUpperCase()}
+                                                </span>
 
-</td>
+                                            </td>
 
-<td>{phone.tel}</td>
+                                            <td>{phone.tel}</td>
 
-<td>
+                                            <td>
 
-<Link to="/edit" state={phone.id}>
+                                                <Link to="/edit" state={phone.id}>
 
-<button className="btn btn-warning btn-sm me-2">
-Edit
-</button>
+                                                    <button className="btn btn-warning btn-sm me-2">
+                                                        Edit
+                                                    </button>
 
-</Link>
+                                                </Link>
 
-<button
-onClick={()=>delPhone(phone.id)}
-className="btn btn-danger btn-sm"
->
-Delete
-</button>
+                                                <button
+                                                    onClick={() => delPhone(phone.id)}
+                                                    className="btn btn-danger btn-sm"
+                                                >
+                                                    Delete
+                                                </button>
 
-</td>
+                                            </td>
 
-</tr>
+                                        </tr>
 
-)
+                                    )
 
-})}
+                                })}
 
-</tbody>
+                            </tbody>
 
-</table>
+                        </table>
 
-):( 
+                    ) : (
 
-<div style={{textAlign:"center",padding:"40px"}}>
+                        <div style={{ textAlign: "center", padding: "40px" }}>
 
-<h4>No Student Found</h4>
+                            <h4>No Student Found</h4>
 
-<p>Please add student data</p>
+                            <p>Please add student data</p>
 
-</div>
+                        </div>
 
-)}
+                    )}
 
-</div>
+                </div>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-)
+    )
 
 }

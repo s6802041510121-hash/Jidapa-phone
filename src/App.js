@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 const App = () => {
    return(
+    <>
    <div className="container">
        <h1 className="text-center bg-light text-info py-3"></h1>
        <BrowserRouter>
@@ -13,7 +14,9 @@ const App = () => {
                <Route path='/edit' element={<Edit />} />
            </Routes>
        </BrowserRouter>
-   </div>);
+   </div>
+    </>
+   );
 }
 
 export default App;
