@@ -7,7 +7,7 @@ const App = () => {
    return(
     <>
    <div className="container">
-       <h1 className="text-center bg-light text-info py-3"></h1>
+       {/* <h1 className="text-center bg-light text-info py-3"></h1> */}
        <BrowserRouter>
            <Routes>
                <Route path="/" element={<Home />} />
