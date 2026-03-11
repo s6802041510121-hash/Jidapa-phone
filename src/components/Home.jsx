@@ -15,7 +15,7 @@ export default function Home() {
 
     useEffect(() => {
         loadPhones();
-    }, [targetDoc]);
+    }, [loadPhones]);
 
     const loadPhones = () => {
 
