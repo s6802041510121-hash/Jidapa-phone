@@ -1,5 +1,5 @@
 import { addDoc, collection, deleteDoc, doc, getDocs } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { db } from "../firebase_config";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default function Home() {
     const stdPhoneRef = collection(db, "/stdphones");
 
 
-    const loadPhones = () => {
+    const loadPhones = useCallback(() => {
 
         getDocs(stdPhoneRef)
             .then((phones) => {
@@ -30,11 +30,11 @@ export default function Home() {
             })
             .catch(err => alert(err));
 
-    };
-    // eslint-disable-next-line
+    }, [stdPhoneRef]);
+
     useEffect(() => {
         loadPhones();
-    }, []);
+    }, [loadPhones]);
     const addPhone = () => {
 
         if (name === "" || sect === "" || tel === "") {
