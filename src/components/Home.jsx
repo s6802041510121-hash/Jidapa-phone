@@ -13,29 +13,29 @@ export default function Home() {
 
     const stdPhoneRef = collection(db, "/stdphones");
 
-    useEffect(() => {
-        loadPhones();
-    }, [loadPhones]);
-
+    
+   useEffect(() => {
+  loadPhones();
+}, [loadPhones]);
     const loadPhones = () => {
-
+        
         getDocs(stdPhoneRef)
-            .then((phones) => {
-
+        .then((phones) => {
+            
                 let list = [];
 
                 phones.docs.forEach(doc => {
                     list.push({ id: doc.id, ...doc.data() });
                 });
-
+                
                 setStdPhones(list);
-
+                
             })
             .catch(err => alert(err));
-
-    };
-
-    const addPhone = () => {
+            
+        };
+        
+        const addPhone = () => {
 
         if (name === "" || sect === "" || tel === "") {
             alert("Please fill all fields");
